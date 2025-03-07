@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projets - Zachary Benayyad</title>
+    <style>
+        /* Fond noir clair */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh; /* Hauteur minimale pour permettre le défilement */
+            background-color: #1a1a1a; /* Fond noir clair */
+            font-family: 'Helvetica Neue', sans-serif;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Alignement vertical */
+            position: relative;
+            overflow-x: hidden; /* Masquer le défilement horizontal */
+        }
+
+        /* Étincelles */
+        .spark {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #fff; /* Couleur des étincelles */
+            border-radius: 50%;
+            box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.8);
+            animation: fall 5s linear infinite;
+            top: 0; /* Commence en haut de la page */
+        }
+
+        /* Animation des étincelles (tomber en diagonale vers la droite) */
+        @keyframes fall {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(100vw);
+                opacity: 0;
+            }
+        }
+
+        /* Conteneur principal */
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(30, 30, 30, 0.8); /* Fond semi-transparent */
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            max-width: 1200px; /* Plus large pour les cases */
+            width: 100%;
+            backdrop-filter: blur(5px); /* Effet de flou pour un look moderne */
+            z-index: 1; /* Pour que le contenu soit au-dessus des étincelles */
+            margin: 20px 0; /* Espacement entre les sections */
+        }
+
+        /* Image circulaire avec contour blanc (photo de profil) */
+        .profile-picture {
+            width: 150px; /* Taille de l'image */
+            height: 150px;
+            border-radius: 50%; /* Forme circulaire */
+            border: 4px solid #fff; /* Contour blanc */
+            object-fit: cover; /* Pour que l'image remplisse le cercle */
+            margin-bottom: 20px; /* Espacement entre l'image et le texte */
+        }
+
+        /* Titre principal */
+        h1 {
+            font-size: 2.8em;
+            color: #bb86fc; /* Couleur violette pour le titre */
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Grille des projets */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Grille responsive */
+            gap: 20px; /* Espacement entre les cases */
+        }
+
+        /* Case de projet */
+        .project-card {
+            background: rgba(255, 255, 255, 0.1); /* Fond semi-transparent */
+            border: 2px solid #fff; /* Contour blanc */
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05); /* Grossit la case au survol */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); /* Ombre au survol */
+        }
+
+        .project-card h3 {
+            font-size: 1.5em;
+            color: #bb86fc; /* Couleur violette pour le titre */
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            font-size: 1em;
+            color: #e0e0e0; /* Texte légèrement gris pour plus de lisibilité */
+        }
+
+        /* Boutons en bas de la page */
+        .bottom-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Espacement entre les boutons */
+            margin-top: 40px; /* Espacement au-dessus des boutons */
+            margin-bottom: 40px; /* Espacement en dessous des boutons */
+        }
+
+        .bottom-buttons a {
+            padding: 10px 20px;
+            color: #fff; /* Texte blanc */
+            text-decoration: none;
+            border: 2px solid #fff; /* Contour blanc */
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .bottom-buttons a:hover {
+            background-color: #fff; /* Fond blanc au survol */
+            color: #1a1a1a; /* Texte noir au survol */
+        }
+
+        /* Style pour les images avec contour blanc */
+        .image-container {
+            display: flex;
+            flex-wrap: wrap; /* Permet aux images de passer à la ligne suivante */
+            justify-content: center;
+            gap: 20px; /* Espacement entre les images */
+            margin-top: 20px; /* Espacement au-dessus des images */
+        }
+
+        .image-container img {
+            width: 200px; /* Taille de l'image */
+            height: auto;
+            border-radius: 10px;
+            border: 4px solid #fff; /* Contour blanc */
+            transition: transform 0.3s ease;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.1); /* Grossit l'image au survol */
+        }
+    </style>
+</head>
+<body>
+    <!-- Étincelles en arrière-plan -->
+    <script>
+        // Générer des étincelles dynamiquement
+        const numSparks = 150; // Nombre d'étincelles
+        const body = document.body;
+
+        for (let i = 0; i < numSparks; i++) {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+            spark.style.left = `${Math.random() * 100}vw`; // Position horizontale aléatoire
+            spark.style.animationDuration = `${Math.random() * 3 + 2}s`; // Durée d'animation aléatoire
+            spark.style.animationDelay = `${Math.random() * 2}s`; // Délai d'animation aléatoire
+            body.appendChild(spark);
+        }
+    </script>
+
+    <!-- Conteneur principal -->
+    <div class="container">
+        <header>
+            <!-- Photo de profil -->
+            <img src="images/Moi.jpg" alt="Photo de Zachary Benayyad" class="profile-picture">
+            <h1>Mes Projets</h1>
+        </header>
+        <main>
+            <!-- Grille des projets -->
+            <div class="project-grid">
+                <!-- Projet 1 : Site web d'une école fictive -->
+                <div class="project-card">
+                    <h3>Site Web d'une École Fictive</h3>
+                    <p>Création d'un site web pour une école fictive avec gestion des élèves, des professeurs et des cours.</p>
+                </div>
+
+                <!-- Projet 2 : Application pour les JO 2024 -->
+                <div class="project-card">
+                    <h3>Application Java pour les JO 2024</h3>
+                    <p>Développement d'une application java pour suivre les événements des Jeux Olympiques 2024.</p>
+                </div>
+
+                <!-- Projet 3 : Jeu de plateforme pour les mathématiques -->
+                <div class="project-card">
+                    <h3>Jeu de Plateforme pour les Mathématiques</h3>
+                    <p>Conception d'un jeu éducatif pour aider les élèves à apprendre les mathématiques de manière ludique.</p>
+                </div>
+
+                <!-- Projet 4 : Site web de votes (comme Reddit) -->
+                <div class="project-card">
+                    <h3>Site Web de Votes</h3>
+                    <p>Création d'une plateforme de votes communautaires avec une base de données pour gérer les posts et les commentaires.</p>
+                </div>
+
+                <!-- Projet 5 : Jeu d'horreur -->
+                <div class="project-card">
+                    <h3>Jeu d'Horreur</h3>
+                    <p>Développement d'un jeu d'horreur avec une atmosphère immersive et des énigmes complexes.</p>
+                </div>
+
+                <!-- Projet 6 : Podcast -->
+                <div class="project-card">
+                    <h3>Podcast</h3>
+                    <p>Création et hébergement d'un podcast sur des sujets variés.</p>
+                </div>
+
+                <!-- Projet 7 : Application Android pour une lanterne -->
+                <div class="project-card">
+                    <h3>Application Android</h3>
+                    <p>Développement d'une application simple pour utiliser une lumière grâce à une interface immersive et complexe.</p>
+                </div>
+
+                <!-- Projet 8 : Base de données pour les JO -->
+                <div class="project-card">
+                    <h3>Base de donnée pour les JO</h3>
+                    <p>Développement d'une base de données avec toutes les méthodes pour gérer les données des JO 2024.</p>
+                </div>
+            </div>
+
+            <!-- Conteneur pour les images -->
+            <div class="image-container">
+                <img src="images/MYSQL.png" alt="MySQL">
+                <img src="images/Dookey.png" alt="Dookey">
+                <img src="images/AutreJeu.png" alt="Autre Jeu">
+                <img src="images/AndroidStudio.png" alt="Android Studio">
+            </div>
+        </main>
+    </div>
+
+    <!-- Boutons en bas de la page -->
+    <div class="bottom-buttons">
+        <a href="index.html">Accueil</a>
+        <a href="Competences.html">Compétences</a>
+    </div>
+</body>
+</html>

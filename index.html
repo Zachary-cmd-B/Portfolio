@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio de Zachary Benayyad</title>
+    <style>
+        /* Fond noir clair */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh; /* Hauteur minimale pour permettre le défilement */
+            background-color: #1a1a1a; /* Fond noir clair */
+            font-family: 'Helvetica Neue', sans-serif;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Alignement vertical */
+            position: relative;
+            overflow-x: hidden; /* Masquer le défilement horizontal */
+        }
+
+        /* Étincelles */
+        .spark {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #fff; /* Couleur des étincelles */
+            border-radius: 50%;
+            box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.8);
+            animation: fall 5s linear infinite;
+            top: 0; /* Commence en haut de la page */
+        }
+
+        /* Animation des étincelles (tomber et respawn) */
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Conteneur principal */
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(30, 30, 30, 0.8); /* Fond semi-transparent */
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            backdrop-filter: blur(5px); /* Effet de flou pour un look moderne */
+            z-index: 1; /* Pour que le contenu soit au-dessus des étincelles */
+            margin: 20px 0; /* Espacement entre les sections */
+        }
+
+        /* Image circulaire avec contour blanc (photo de profil) */
+        .profile-picture {
+            width: 150px; /* Taille de l'image */
+            height: 150px;
+            border-radius: 50%; /* Forme circulaire */
+            border: 4px solid #fff; /* Contour blanc */
+            object-fit: cover; /* Pour que l'image remplisse le cercle */
+            margin-bottom: 20px; /* Espacement entre l'image et le texte */
+        }
+
+        /* Image du CV avec contour blanc et effet hover */
+        .cv-image {
+            width: 200px; /* Taille de l'image du CV */
+            height: auto;
+            border: 4px solid #fff; /* Contour blanc */
+            border-radius: 8px; /* Coins légèrement arrondis */
+            transition: transform 0.3s ease; /* Animation de grossissement */
+            margin-bottom: 10px; /* Espacement entre l'image et le bouton */
+        }
+
+        .cv-image:hover {
+            transform: scale(1.1); /* Grossit l'image de 10% au survol */
+        }
+
+        /* Bouton de téléchargement du CV */
+        .download-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #bb86fc; /* Couleur violette */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: #3700b3; /* Couleur violette plus foncée au survol */
+        }
+
+        /* Boutons en bas de la page */
+        .bottom-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Espacement entre les boutons */
+            margin-top: 40px; /* Espacement au-dessus des boutons */
+            margin-bottom: 40px; /* Espacement en dessous des boutons */
+        }
+
+        .bottom-buttons a {
+            padding: 10px 20px;
+            color: #fff; /* Texte blanc */
+            text-decoration: none;
+            border: 2px solid #fff; /* Contour blanc */
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .bottom-buttons a:hover {
+            background-color: #fff; /* Fond blanc au survol */
+            color: #1a1a1a; /* Texte noir au survol */
+        }
+
+        /* Titre principal */
+        h1 {
+            font-size: 2.8em;
+            color: #bb86fc; /* Couleur violette pour le titre */
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Section À propos */
+        #about {
+            margin-bottom: 30px;
+        }
+
+        #about h2 {
+            font-size: 1.8em;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        #about p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #e0e0e0; /* Texte légèrement gris pour plus de lisibilité */
+        }
+
+        /* Section Contact */
+        #contact a {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        #contact img {
+            width: 40px; /* Taille du logo */
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Effet de grossissement au survol */
+        #contact a:hover img {
+            transform: scale(1.2); /* Grossit le logo de 20% */
+        }
+
+        /* Suppression du texte "Mon LinkedIn" */
+        #contact a span {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Étincelles en arrière-plan -->
+    <script>
+        // Générer des étincelles dynamiquement
+        const numSparks = 150; // Nombre d'étincelles
+        const body = document.body;
+
+        for (let i = 0; i < numSparks; i++) {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+            spark.style.left = `${Math.random() * 100}vw`; // Position horizontale aléatoire
+            spark.style.animationDuration = `${Math.random() * 3 + 2}s`; // Durée d'animation aléatoire
+            spark.style.animationDelay = `${Math.random() * 2}s`; // Délai d'animation aléatoire
+            body.appendChild(spark);
+        }
+    </script>
+
+    <!-- Conteneur principal -->
+    <div class="container">
+        <header>
+            <!-- Photo de profil -->
+            <img src="images/Moi.jpg" alt="Photo de Zachary Benayyad" class="profile-picture">
+            <h1>Bienvenue sur mon Portfolio</h1>
+        </header>
+        <main>
+            <section id="about">
+                <h2>À propos de moi</h2>
+                <p>Je suis Zachary Benayyad, un étudiant passionné par l'informatique et le développement. Actuellement en formation de BUT Informatique à l'IUT de Paris-Saclay, j'ai acquis une solide expertise dans le domaine grâce à mes expériences et compétences variées. Mon parcours académique et mes projets m'ont permis de développer une compréhension approfondie des concepts informatiques, allant du développement logiciel à la gestion de bases de données.</p>
+            </section>
+            <!-- Section Contact -->
+            <section id="contact">
+                <a href="https://www.linkedin.com/in/zachary-benayyad-a470b0293/" target="_blank">
+                    <img src="https://www.linkedin.com/favicon.ico" alt="LinkedIn Logo">
+                    <span>Mon LinkedIn</span> <!-- Texte caché -->
+                </a>
+            </section>
+        </main>
+    </div>
+
+    <!-- Section CV (en dessous de tout) -->
+    <div class="container">
+        <section id="cv">
+            <img src="images/CV.png" alt="CV de Zachary Benayyad" class="cv-image">
+            <a href="images/CV_Zachary.pdf" download="CV_Zachary.pdf" class="download-button">Télécharger mon CV</a>
+        </section>
+    </div>
+
+    <!-- Boutons en bas de la page -->
+    <div class="bottom-buttons">
+        <a href="Competences.html">Compétences</a>
+        <a href="Projet.html">Projets</a>
+    </div>
+</body>
+</html>

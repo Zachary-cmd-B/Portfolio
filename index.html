@@ -213,23 +213,19 @@ nav {
 
 .hero-subtitle .hl { color: var(--lavender); font-style: normal; font-weight: 500; }
 
-/* ZONE LOGOS ECOLES OPTIMISÉE */
 .school-logos {
   display: flex;
   align-items: center;
   gap: 3rem;
   margin-bottom: 2.5rem;
-  opacity: 0; /* Caché au début pour l'animation */
+  opacity: 0;
   transform: translateY(15px);
   animation: logoFadeUp 1s ease forwards;
-  animation-delay: 1.8s; /* Se déclenche vers la fin de l'écriture du nom */
+  animation-delay: 1.8s;
 }
 
 @keyframes logoFadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .school-logo-link {
@@ -244,7 +240,7 @@ nav {
 }
 
 .school-logo-img {
-  height: 65px; /* Logos plus grands */
+  height: 65px;
   width: auto;
   object-fit: contain;
 }
@@ -365,7 +361,7 @@ nav {
   transition: width 1s cubic-bezier(0.1, 1, 0.1, 1);
 }
 
-/* ── STAGES ─────────────────────────────── */
+/* ── STAGES & GRILLE IMAGES ─────────────── */
 .experience-timeline {
   display: flex;
   flex-direction: column;
@@ -398,6 +394,29 @@ nav {
 .exp-desc {
   font-size: 0.9rem;
   color: #A8A8C8;
+  margin-bottom: 1.25rem;
+}
+
+/* Grille d'images pour les stages */
+.exp-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.exp-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.exp-img:hover {
+  transform: scale(1.02);
+  border-color: var(--gold);
 }
 
 /* ── PROJECTS ────────────────────────────── */
@@ -501,7 +520,76 @@ footer {
   .hero-cta { justify-content: center; }
   .nav-links { display: none; }
   nav { padding: 1rem 1.5rem; }
+  .exp-gallery { grid-template-columns: 1fr; } /* Une image par ligne sur mobile */
 }
+
+/* ── FILTRES (CASES À COCHER) ───────────── */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  background: rgba(15, 15, 40, 0.4);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.filter-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.filter-label input[type="checkbox"] {
+  display: none; /* Cache la case par défaut moche */
+}
+
+.filter-custom {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 0.4rem 1rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.filter-label input[type="checkbox"]:checked + .filter-custom {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 12px rgba(245, 200, 66, 0.15);
+}
+
+/* Modification des Project Cards pour intégrer une image propre */
+.project-card {
+  padding: 0 !important; /* Permet à l'image d'épouser les bords */
+  display: flex;
+  flex-direction: column;
+}
+
+.project-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border);
+  transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-img {
+  transform: scale(1.03);
+}
+
+.project-info-box {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 </style>
 </head>
 <body>
@@ -531,7 +619,6 @@ footer {
         Étudiant en BUT Informatique à l’Université Paris-Saclay, futur apprenti ingénieur à l’<span class="hl">Efrei (Majeure Logiciels et Systèmes d'Information)</span>. Passionné par le développement logiciel, l'intégration de données et l’automatisation de processus.
       </p>
       
-      <!-- ZONE ECOLES AVEC ANIMATION ET COULEUR -->
       <div class="school-logos">
         <div class="school-logo-link">
           <img src="logo-saclay.png" alt="Université Paris-Saclay" class="school-logo-img">
@@ -555,7 +642,7 @@ footer {
   </div>
 </div>
 
-<!-- PAGE 2: COMPETENCES -->
+<!-- PAGE 2: COMPETENCES & PARCOURS -->
 <div id="skills" class="page">
   <h2 class="section-title" data-i18n="skills-title">Mes Compétences</h2>
   
@@ -624,54 +711,141 @@ footer {
     </div>
   </div>
 
+  <!-- MISE À JOUR DATES STAGES + GALERIES D'IMAGES -->
   <h2 class="section-title" style="margin-top: 4rem;" data-i18n="exp-title">Parcours & Stages</h2>
   <div class="experience-timeline">
+    
+    <!-- STAGE DGS TRANSPORT -->
     <div class="exp-card">
-      <div class="exp-date">Janvier 2026 — Présent</div>
+      <div class="exp-date" data-i18n="date-dgs">Janvier 2026 — Mai 2026</div>
       <div class="exp-title">Stage — DGS Transport (Limeil Brévannes)</div>
-      <div class="exp-desc">Evolution et maintenance de flux EDI (EDIFACT, XML, CSV). Scripts automatisés en Python et requêtes SQL. Développement de modules d'extranet interne (gestion sous-traitance, statistiques).</div>
+      <div class="exp-desc" data-i18n="desc-dgs">Evolution et maintenance de flux EDI (EDIFACT, XML, CSV). Scripts automatisés en Python et requêtes SQL. Développement de modules d'extranet interne (gestion sous-traitance, statistiques).</div>
+      <div class="exp-gallery">
+        <img src="dgs-img1.jpg" alt="DGS Transport - Projet 1" class="exp-img">
+        <img src="dgs-img2.jpg" alt="DGS Transport - Projet 2" class="exp-img">
+      </div>
     </div>
+    
+    <!-- STAGE SOFTWARE ATTITUDE -->
     <div class="exp-card">
-      <div class="exp-date">Avril 2025</div>
-      <div class="exp-title">Stage — Software Attitude</div>
-      <div class="exp-desc">Configuration d'infrastructures IT (serveurs, switches). Automatisation de processus via scripts PowerShell et création d'un add-in Outlook.</div>
+      <div class="exp-date" data-i18n="date-sa">Avril 2025 — Juin 2025</div>
+      <div class="exp-title">Stage — Software Attitude (Trilport)</div>
+      <div class="exp-desc" data-i18n="desc-sa">Configuration d'infrastructures IT (serveurs, switches). Automatisation de processus via scripts PowerShell et création d'un add-in Outlook.</div>
+      <div class="exp-gallery">
+        <img src="software-img1.jpg" alt="Software Attitude - Infrastructure" class="exp-img">
+        <img src="software-img2.jpg" alt="Software Attitude - Automation" class="exp-img">
+      </div>
     </div>
+
   </div>
 </div>
 
-<!-- PAGE 3: PROJECTS -->
+<!-- PAGE 3: PROJECTS (Version Filtrable avec Images) -->
 <div id="projects" class="page">
   <h2 class="section-title" data-i18n="projects-heading">Mes Réalisations</h2>
-  <div class="projects-grid">
-    <div class="project-card">
-      <h3 class="project-name">Projet IA & Bridge</h3>
-      <p class="project-desc" data-i18n="proj1-desc">Application web Python/Django intégrant la capture vidéo et le traitement d'images temps réel (OpenCV, YOLO) pour analyser et représenter des parties de cartes (Bridge).</p>
-      <div class="project-stack">
-        <span class="stack-tag">Python</span>
-        <span class="stack-tag">Django</span>
-        <span class="stack-tag">OpenCV</span>
-        <span class="stack-tag">YOLO</span>
+  
+  <!-- Zone des Cases à Cocher (Filtres) -->
+  <div class="filter-container">
+    <label class="filter-label">
+      <input type="checkbox" id="fx-all" value="all" checked onchange="handleFilterChange('all')">
+      <span class="filter-custom" data-i18n="flt-all">Tout</span>
+    </label>
+    <label class="filter-label">
+      <input type="checkbox" class="fx-type" value="ia" onchange="handleFilterChange('type')">
+      <span class="filter-custom">IA</span>
+    </label>
+    <label class="filter-label">
+      <input type="checkbox" class="fx-type" value="data" onchange="handleFilterChange('type')">
+      <span class="filter-custom">Data</span>
+    </label>
+    <label class="filter-label">
+      <input type="checkbox" class="fx-type" value="game" onchange="handleFilterChange('type')">
+      <span class="filter-custom" data-i18n="flt-game">Jeu Vidéo</span>
+    </label>
+    <label class="filter-label">
+      <input type="checkbox" class="fx-type" value="java" onchange="handleFilterChange('type')">
+      <span class="filter-custom">Java</span>
+    </label>
+    <label class="filter-label">
+      <input type="checkbox" class="fx-type" value="web" onchange="handleFilterChange('type')">
+      <span class="filter-custom">PHP / JS / HTML</span>
+    </label>
+  </div>
+
+  <!-- Grille des Projets -->
+  <div class="projects-grid" id="projectsGrid">
+    
+    <!-- PROJET 1: IA -->
+    <div class="project-card" data-types="ia web">
+      <img src="project-bridge.jpg" alt="Projet IA Bridge" class="project-img">
+      <div class="project-info-box">
+        <h3 class="project-name">Projet IA & Bridge</h3>
+        <p class="project-desc" data-i18n="proj1-desc">Application web Python/Django intégrant la capture vidéo et le traitement d'images temps réel (OpenCV, YOLO) pour analyser et représenter des parties de cartes (Bridge).</p>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Django</span>
+          <span class="stack-tag">OpenCV</span>
+          <span class="stack-tag">YOLO</span>
+        </div>
       </div>
     </div>
 
-    <div class="project-card">
-      <h3 class="project-name">Plateforme de Gestion de Stages</h3>
-      <p class="project-desc" data-i18n="proj2-desc">Application web robuste développée avec Django et PostgreSQL intégrant une gestion fine des rôles, la validation d'offres et des dashboards statistiques.</p>
-      <div class="project-stack">
-        <span class="stack-tag">Django</span>
-        <span class="stack-tag">PostgreSQL</span>
+    <!-- PROJET 2: WEB / DJANGO -->
+    <div class="project-card" data-types="web">
+      <img src="project-stages.jpg" alt="Gestion de Stages" class="project-img">
+      <div class="project-info-box">
+        <h3 class="project-name">Plateforme de Gestion de Stages</h3>
+        <p class="project-desc" data-i18n="proj2-desc">Application web robuste développée avec Django et PostgreSQL intégrant une gestion fine des rôles, la validation d'offres et des dashboards statistiques.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Django</span>
+          <span class="stack-tag">PostgreSQL</span>
+        </div>
       </div>
     </div>
 
-    <div class="project-card">
-      <h3 class="project-name">🎮 Jeux Vidéo & Moteur Godot</h3>
-      <p class="project-desc" data-i18n="proj3-desc">Conception de plusieurs projets personnels de jeux vidéo (plateforme, gestion, horreur) en utilisant C# et le moteur Godot.</p>
-      <div class="project-stack">
-        <span class="stack-tag">Godot</span>
-        <span class="stack-tag">C#</span>
-        <span class="stack-tag">Game Design</span>
+    <!-- PROJET 3: DATA -->
+    <div class="project-card" data-types="data web">
+      <img src="project-data.jpg" alt="Projet Data" class="project-img">
+      <div class="project-info-box">
+        <h3 class="project-name">Projet Data — SPARQL</h3>
+        <p class="project-desc" data-i18n="proj-data-desc">Application web avec graphiques et cartes interactives pour l'analyse et la visualisation de données sportives complexes récupérées sur Wikidata.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">SPARQL</span>
+          <span class="stack-tag">Wikidata</span>
+        </div>
       </div>
     </div>
+
+    <!-- PROJET 4: JAVA & JEUX (C#) -->
+    <div class="project-card" data-types="java game">
+      <img src="project-games.jpg" alt="Applications et Jeux" class="project-img">
+      <div class="project-info-box">
+        <h3 class="project-name">Applications & Jeux Video</h3>
+        <p class="project-desc" data-i18n="proj3-desc">Conception et développement d'applications bureautiques en Java et C# et prototypes de jeux vidéo (plateforme, gestion, horreur) via Godot.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Java</span>
+          <span class="stack-tag">C#</span>
+          <span class="stack-tag">Godot</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJET 5: APP CRITIQUE DGS TRANSPORT -->
+    <div class="project-card" data-types="web">
+      <img src="project-dgs.jpg" alt="DGS Transport Extranet" class="project-img">
+      <div class="project-info-box">
+        <h3 class="project-name">Extranet — DGS Transport</h3>
+        <p class="project-desc" data-i18n="proj-dgs-desc">Conception et déploiement de A à Z d'une application Web critique sur l'Extranet de DGS Transports pour automatiser et sécuriser le contrôle financier et logistique des transporteurs externes (louageurs). Remplace un système Excel/VBA obsolète.</p>
+        <div class="project-stack">
+          <span class="stack-tag">PHP</span>
+          <span class="stack-tag">JavaScript</span>
+          <span class="stack-tag">HTML/CSS</span>
+          <span class="stack-tag">SQL</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -735,6 +909,44 @@ function goToPage(pageId) {
   window.scrollTo(0, 0);
 }
 
+/* ── NOUVEAU : Logique de Filtrage par Cases à Cocher ── */
+function handleFilterChange(trigger) {
+  const allCheckbox = document.getElementById('fx-all');
+  const typeCheckboxes = document.querySelectorAll('.fx-type');
+  const cards = document.querySelectorAll('.project-card');
+
+  if (trigger === 'all' && allCheckbox.checked) {
+    // Si on coche "Tout", on décoche toutes les autres catégories
+    typeCheckboxes.forEach(cb => cb.checked = false);
+  } else if (trigger === 'type') {
+    // Si on coche une catégorie, on décoche "Tout"
+    allCheckbox.checked = false;
+  }
+
+  // On crée la liste des filtres actifs (ex: ['ia', 'java'])
+  const activeFilters = [];
+  typeCheckboxes.forEach(cb => {
+    if (cb.checked) activeFilters.push(cb.value);
+  });
+
+  // Si l'utilisateur a tout décoché, on réactive "Tout" par défaut
+  if (activeFilters.length === 0) {
+    allCheckbox.checked = true;
+  }
+
+  // On affiche ou on cache les cartes des projets
+  cards.forEach(card => {
+    if (allCheckbox.checked) {
+      card.style.display = 'flex';
+    } else {
+      const cardTypes = card.getAttribute('data-types').split(' ');
+      // Affiche le projet si au moins une de ses catégories est cochée
+      const match = activeFilters.some(filter => cardTypes.includes(filter));
+      card.style.display = match ? 'flex' : 'none';
+    }
+  });
+}
+
 /* ── Effect Écriture Prénom Nom ── */
 const FULL_NAME  = "Zachary Benayyad";
 const heroEl      = document.getElementById("heroName");
@@ -769,7 +981,7 @@ if (heroBg) {
   });
 }
 
-/* ── Traducteur FR / EN ── */
+/* ── Traducteur FR / EN (Mis à jour avec TOUS tes projets) ── */
 let currentLang = 'fr';
 const TRANSLATIONS = {
   fr: {
@@ -778,11 +990,15 @@ const TRANSLATIONS = {
     "hero-subtitle": "Étudiant en BUT Informatique à l’Université Paris-Saclay, futur apprenti ingénieur à l’Efrei (Majeure Logiciels et Systèmes d'Information). Passionné par le développement logiciel, l'intégration de données et l’automatisation de processus.",
     "btn-projects": "Voir les projets →", "btn-cv": "Télécharger mon CV",
     "skills-title": "Mes Compétences", "cat-dev": "Développement Logiciel", "cat-web": "Web & Données", "cat-sys": "Systèmes & Réseaux",
-    "exp-title": "Parcours & Stages", "projects-heading": "Mes Réalisations",
+    "exp-title": "Parcours & Stages", "date-dgs": "Janvier 2026 — Mai 2026", "date-sa": "Avril 2025 — Juin 2025", 
+    "projects-heading": "Mes Réalisations",
+    "flt-all": "Tout", "flt-game": "Jeu Vidéo",
     "proj1-desc": "Application web Python/Django intégrant la capture vidéo et le traitement d'images temps réel (OpenCV, YOLO) pour analyser et représenter des parties de cartes (Bridge).",
     "proj2-desc": "Application web robuste développée avec Django et PostgreSQL intégrant une gestion fine des rôles, la validation d'offres et des dashboards statistiques.",
-    "proj3-desc": "Conception de plusieurs projets personnels de jeux vidéo (plateforme, gestion, horreur) en utilisant C# et le moteur Godot.",
-    "contact-title": "On se parle ?", "contact-subtitle": "Actuellement focalisé sur l'ingénierie logicielle et les architectures de données. N'hésitez pas à me joindre !"
+    "proj-data-desc": "Application web avec graphiques et cartes interactives pour l'analyse et la visualisation de données sportives complexes récupérées sur Wikidata.",
+    "proj3-desc": "Conception et développement d'applications bureautiques (Jeux Olympiques) en Java et prototypes de jeux vidéo (plateforme, gestion, horreur) via C# et Godot.",
+    "proj-dgs-desc": "Conception et déploiement de A à Z d'une application Web critique sur l'Extranet de DGS Transports pour automatiser et sécuriser le contrôle financier et logistique des transporteurs externes (louageurs). Remplace un système Excel/VBA obsolète.",
+    "contact-title": "On se parle ?", "contact-subtitle": "Actuellement focalisé on l'ingénierie logicielle et les architectures de données. N'hésitez pas à me joindre !"
   },
   en: {
     "nav-home": "home", "nav-skills": "skills", "nav-projects": "projects", "nav-contact": "contact",
@@ -790,10 +1006,14 @@ const TRANSLATIONS = {
     "hero-subtitle": "Computer Science student at University Paris-Saclay, incoming Software Engineering Apprentice at Efrei. Focused on software development, data integration, and workflow automation.",
     "btn-projects": "View Projects →", "btn-cv": "Download Resume",
     "skills-title": "Technical Skills", "cat-dev": "Software Engineering", "cat-web": "Web & Data Management", "cat-sys": "Systems & Networks",
-    "exp-title": "Experience & Internships", "projects-heading": "My Work",
+    "exp-title": "Experience & Internships", "date-dgs": "January 2026 — May 2026", "date-sa": "April 2025 — June 2025", 
+    "projects-heading": "My Work",
+    "flt-all": "All", "flt-game": "Game Dev",
     "proj1-desc": "Python/Django web app with real-time computer vision (OpenCV, YOLO) to track and analyze live Bridge card games.",
     "proj2-desc": "Robust student internship management platform featuring granular access control, validation workflows, and data visualizations.",
-    "proj3-desc": "Design and programming of indie game prototypes (platformers, strategy, horror) using C# and the Godot Engine.",
+    "proj-data-desc": "Web application with charts and interactive maps for the analysis and visualization of complex sports data extracted from Wikidata.",
+    "proj3-desc": "Design and development of desktop applications (Olympic Games) in Java and indie game prototypes (platformer, strategy, horror) using C# and Godot.",
+    "proj-dgs-desc": "End-to-end design and deployment of a mission-critical web application on the DGS Transports Extranet to automate and secure financial and logistical audits of external carriers. Replaced an obsolete Excel/VBA macro ecosystem.",
     "contact-title": "Get in Touch", "contact-subtitle": "Currently focused on software engineering and backend data pipelines. Drop me a line!"
   }
 };
